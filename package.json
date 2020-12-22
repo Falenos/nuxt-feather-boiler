@@ -2,13 +2,21 @@
   "name": "client",
   "version": "1.0.0",
   "private": true,
+  "keywords": [
+    "nuxt",
+    "feathers"
+  ],
+  "author": {
+    "name": "Yorgos Kakavas",
+    "email": "georgis.kakavas@gmail.com"
+  },
   "scripts": {
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "lint:js": "eslint --config .eslintrc.js --ext .js,.vue --ignore-path .gitignore . --fix",
+    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore --fix",
     "lint": "npm run lint:js && npm run lint:style",
     "test": "jest"
   },
