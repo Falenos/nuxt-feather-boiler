@@ -3,7 +3,5 @@ export default () => ({
     user: {
         name: '',
         email: '',
-        sellerId: '',
-        mwsAuthToken: '',
     },
 })

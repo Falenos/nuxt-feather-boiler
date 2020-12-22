@@ -27,13 +27,6 @@ export default {
         })
         await dispatch('login', { email, password })
     },
-    async setAmazonCredentials({ commit, state }, { sellerId, mwsAuthToken }) {
-        const updatedUser = await this.$api.service('users').patch(state.user._id, {
-            sellerId,
-            mwsAuthToken,
-        })
-        commit(SET_USER, updatedUser)
-    },
     async setPersonalInformation({ commit, state }, { name, email }) {
         const updatedUser = await this.$api.service('users').patch(state.user._id, {
             name,

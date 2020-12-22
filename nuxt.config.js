@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-// import * as endpoints from './constants/endpoints'
 if (process.env.NODE_ENV === 'production') {
     require('./config.production')
     // variables starting with NUXT_ENV_ will be injected to the client side
@@ -45,8 +44,8 @@ export default {
             mode: 'all',
         },
         {
-            src: '~/plugins/feathers-client',
-            mode: 'all',
+            src: '~/plugins/api-listeners',
+            mode: 'client',
         },
         {
             src: '~/plugins/ensure-auth',
@@ -69,11 +68,30 @@ export default {
 
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
+        // Doc: https://axios.nuxtjs.org/usage
+        '@nuxtjs/axios',
+        'cookie-universal-nuxt',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
         // https://go.nuxtjs.dev/content
         '@nuxt/content',
     ],
+
+    /*
+     ** Axios module configuration
+     ** See https://axios.nuxtjs.org/options
+     */
+    axios: {
+        prefix: '/api/',
+        baseURL: `${process.env.BASE_URL}/api/`,
+        proxy: true,
+    },
+    proxy: {
+        '/api/**': {
+            target: process.env.API_URL,
+            pathRewrite: { '^/api/': '' },
+        },
+    },
 
     // Content module configuration (https://go.nuxtjs.dev/config-content)
     content: {},

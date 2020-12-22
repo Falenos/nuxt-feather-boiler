@@ -28,6 +28,15 @@
             <v-btn icon @click.stop="rightDrawer = !rightDrawer">
                 <v-icon>mdi-menu</v-icon>
             </v-btn>
+            <v-spacer />
+            <v-row v-if="loggedIn" align="center" justify="end">
+                <span>{{ user.email }}</span>
+                <v-btn active-class="no-active" text to="/" @click="logout()">Logout</v-btn>
+            </v-row>
+            <v-row v-else justify="end">
+                <v-btn text to="/login">Login</v-btn>
+                <v-btn text to="/register">Register</v-btn>
+            </v-row>
         </v-app-bar>
         <v-main>
             <v-container>
@@ -51,6 +60,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
     data() {
         return {
@@ -74,6 +84,12 @@ export default {
             rightDrawer: false,
             title: 'Vuetify.js',
         }
+    },
+    computed: {
+        ...mapState('auth', ['loggedIn', 'user']),
+    },
+    methods: {
+        ...mapActions('auth', ['logout']),
     },
 }
 </script>
