@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"],
+      "~/*": ["./*"]
+    }
+  },
+  "exclude": ["dist"],
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}

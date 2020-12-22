@@ -1,6 +1,28 @@
 import colors from 'vuetify/es5/util/colors'
+// import * as endpoints from './constants/endpoints'
+if (process.env.NODE_ENV === 'production') {
+    require('./config.production')
+    // variables starting with NUXT_ENV_ will be injected to the client side
+    process.env.NUXT_ENV_API_URL = process.env.API_URL
+} else {
+    require('./config.development')
+    process.env.NUXT_ENV_API_URL = process.env.API_URL
+}
 
 export default {
+    /*
+     ** Nuxt rendering mode
+     ** See https://nuxtjs.org/api/configuration-mode
+     */
+    mode: 'universal',
+    /*
+     ** Nuxt target
+     ** See https://nuxtjs.org/api/configuration-target
+     */
+    target: 'server',
+    server: {
+        port: process.env.PORT,
+    },
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
         titleTemplate: '%s - client',
@@ -17,7 +39,20 @@ export default {
     css: [],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: [],
+    plugins: [
+        {
+            src: '~/plugins/feathers-client',
+            mode: 'all',
+        },
+        {
+            src: '~/plugins/feathers-client',
+            mode: 'all',
+        },
+        {
+            src: '~/plugins/ensure-auth',
+            mode: 'client',
+        },
+    ],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
@@ -63,5 +98,22 @@ export default {
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
-    build: {},
+    build: {
+        analyze: false,
+        transpile: ['feathers-custom-methods'],
+        babel: {
+            plugins: ['@babel/plugin-proposal-optional-chaining'],
+        },
+        extend(config, { isClient }) {
+            if (isClient) {
+                config.node = {
+                    http: 'empty',
+                    fs: 'empty',
+                    child_process: 'empty',
+                    net: 'empty',
+                    tls: 'empty',
+                }
+            }
+        },
+    },
 }
