@@ -1,5 +1,8 @@
 # client
 
+Feathers client is exposed to this.$api
+Feathers authentication setup with local strategy inluded
+
 ## Build Setup
 
 ```bash
